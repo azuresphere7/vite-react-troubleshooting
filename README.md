@@ -1,30 +1,43 @@
-# React + TypeScript + Vite
+## Fixing Routing on Vercel Deployment with Vite and React Router
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Here I've described how to address a common routing issue encountered when deploying a Vite + React application with React Router to Vercel.
 
-Currently, two official plugins are available:
+### The Problem
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Single Page Applications (SPAs) handle routing on the client-side. When a user refreshes a specific route within the SPA, the server might not recognize that route and return a 404 error because there's no corresponding static file.
 
-## Expanding the ESLint configuration
+### The Solution
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Vercel is configured to handle SPAs by default. However, you can add a configuration file (`vercel.json`) to ensure proper routing behavior:
 
-- Configure the top-level `parserOptions` property like this:
+1. **Create `vercel.json`:** In your project's root directory, create a file named `vercel.json`.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+2. **Add Rewrite Rule:** Paste the following code snippet into the `vercel.json` file:
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+This configuration tells Vercel to rewrite any incoming request path (`/.*`) to serve the `index.html` file. Your React app will handle the routing based on the URL within the `index.html`.
+
+### Benefits
+
+- Prevents 404 errors on route refresh.
+- Improves user experience by ensuring seamless navigation within your SPA.
+
+### Additional Notes
+
+- While Vercel handles routing by default, this configuration explicitly defines the behavior, making your deployment more robust.
+- Remember to commit the `vercel.json` file to your version control system for future deployments.
+
+### Resources
+
+- Vercel Documentation on Rewrites: [https://vercel.com/docs/edge-network/rewrites](https://vercel.com/docs/edge-network/rewrites)
+- React Router Documentation: [https://reacttraining.com/react-router](https://reacttraining.com/react-router)
