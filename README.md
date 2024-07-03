@@ -10,7 +10,7 @@ Single Page Applications (SPAs) handle routing on the client-side. When a user r
 
 Vercel is configured to handle SPAs by default. However, you can add a configuration file (`vercel.json`) to ensure proper routing behavior:
 
-1. **Create `vercel.json`:** In your project's root directory, create a file named `vercel.json`.
+1. **Create `vercel.json`:** In the project's root directory, create a file named `vercel.json`.
 
 2. **Add Rewrite Rule:** Paste the following code snippet into the `vercel.json` file:
 
@@ -25,17 +25,17 @@ Vercel is configured to handle SPAs by default. However, you can add a configura
 }
 ```
 
-This configuration tells Vercel to rewrite any incoming request path (`/.*`) to serve the `index.html` file. Your React app will handle the routing based on the URL within the `index.html`.
+This configuration tells Vercel to rewrite any incoming request path (`/.*`) to serve the `index.html` file. This React app will handle the routing based on the URL within the `index.html`.
 
 ### Benefits
 
 - Prevents 404 errors on route refresh.
-- Improves user experience by ensuring seamless navigation within your SPA.
+- Improves user experience by ensuring secure navigation within our SPA.
 
 ### Additional Notes
 
-- While Vercel handles routing by default, this configuration explicitly defines the behavior, making your deployment more robust.
-- Remember to commit the `vercel.json` file to your version control system for future deployments.
+- While Vercel handles routing by default, this configuration explicitly defines the behavior, making our deployment more robust.
+- Remember to commit the `vercel.json` file to our version control system for future deployments.
 
 ### Resources
 
